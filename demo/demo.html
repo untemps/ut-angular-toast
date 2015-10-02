@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="demo">
+    <head>
+        <meta charset="utf-8">
+        <title>AngularJS directive demo</title>
+
+        <!-- TODO: Include Angular from Bower components -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+
+        <link rel="stylesheet" href="../src/ut-angular-toast.css">
+        <link rel="stylesheet" href="demo.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-muted">Demo</h1>
+
+            <div class="usage row">
+                <h4>Simple usage</h4>
+
+                <p>This is a simple usage of untemps.ut-angular-toast</p>
+                <pre>utToast.append('success', 'My message', 5000);</pre>
+                <h4>Results</h4>
+
+                <div ng-controller="demoController as ctrl">
+
+                    <form novalidate>
+                        <div class="form-group">
+                            <label for="delayInput">Type a delay</label>
+                            <input id="delayInput" type="number" ng-model="ctrl.delay" ng-model-options="{updateOn: 'blur'}" class="form-control">
+                            <span class="help-block">In milliseconds between 1000 and 20000</span>
+                        </div>
+
+                        <div class="form-group">
+                        <label for="typeInput">Choose a type</label>
+                        <select name="typeInput" id="typeInput" ng-model="ctrl.type" ng-options="option.label for option in ctrl.types" class="form-control"></select>
+                    </div>
+
+                        <div class="form-group">
+                            <label for="textInput">Type a message</label>
+                            <textarea name="textInput" id="textInput" ng-model="ctrl.text" rows="6" class="form-control"></textarea>
+                            <span class="help-block">You can use HTML in your message</span>
+                        </div>
+
+                        <hr>
+
+                        <button type="button" class="btn btn-primary" ng-click="ctrl.toast()">Toast</button>
+                        <button type="button" class="btn btn-info" ng-click="ctrl.removeAllToasts()">Remove all toasts</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <script src="../src/ut-angular-toast.js"></script>
+        <script src="demo.js"></script>
+    </body>
+</html>

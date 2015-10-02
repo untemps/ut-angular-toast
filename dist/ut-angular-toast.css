@@ -1,0 +1,110 @@
+ut-toast,
+.ut-toast {
+  position: fixed;
+  z-index: 1080;
+
+  left: 30px;
+  top: 10px;
+  right: 30px;
+}
+
+ut-toast ul,
+.ut-toast ul {
+  list-style: none;
+  padding: 0;
+
+  width: 100%;
+}
+
+ut-toast ul li,
+.ut-toast ul li {
+  color: #000000;
+  background-color: #ffffff;
+
+  width: 100%;
+  min-width: 500px;
+
+  margin-bottom: 10px;
+}
+
+ut-toast ul li.error,
+.ut-toast ul li.error {
+  color: #ffffff;
+  background-color: #880000;
+}
+
+ut-toast ul li.warn,
+.ut-toast ul li.warn {
+  color: #ffffff;
+  background-color: #c67605;
+}
+
+ut-toast ul li.info,
+.ut-toast ul li.info {
+  color: #ffffff;
+  background-color: #105cb6;
+}
+
+ut-toast ul li.success,
+.ut-toast ul li.success {
+  color: #ffffff;
+  background-color: #449d44;
+}
+
+ut-toast ul li.ng-move,
+.ut-toast ul li.ng-move {
+  opacity: 0;
+  -webkit-transition: 1s linear all; /* Safari/Chrome */
+  transition: 1s linear all; /* All other modern browsers and IE10+ */
+}
+
+ut-toast ul li.ng-move-active,
+.ut-toast ul li.ng-move-active {
+  opacity: 1;
+}
+
+ut-toast ul li.ng-leave,
+.ut-toast ul li.ng-leave {
+  opacity: 1;
+  -webkit-transition: 1s linear all; /* Safari/Chrome */
+  transition: 1s linear all; /* All other modern browsers and IE10+ */
+}
+
+ut-toast ul li.ng-leave-active,
+.ut-toast ul li.ng-leave-active {
+  opacity: 0;
+}
+
+ut-toast ul li *,
+.ut-toast ul li * {
+  display: inline-block;
+}
+
+ut-toast ul li div,
+.ut-toast ul li div {
+  text-align: right;
+  width: 100%;
+}
+
+ut-toast ul li div.toast-line-container,
+.ut-toast ul li div.toast-line-container {
+  width: 98%;
+
+  margin: 0;
+  padding: 15px 15px;
+}
+
+ut-toast ul li span.toast-line,
+.ut-toast ul li span.toast-line {
+  display: block;
+
+  text-align: left;
+}
+
+ut-toast ul li span.toast-close,
+.ut-toast ul li span.toast-close {
+  cursor: pointer;
+
+  vertical-align: top;
+  margin: 5px;
+}

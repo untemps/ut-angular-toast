@@ -1,0 +1,21 @@
+{
+    "name": "ut-angular-toast",
+    "version": "0.0.1",
+    "authors": "v.lebadezet@untemps.net",
+    "description": "Display a notification on top of the application.",
+    "main": "dist/ut-angular-toast.js",
+    "license": "MIT",
+    "private": false,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "devDependencies": {
+        "angular": "~1.4.2",
+        "angular-sanitize": "~1.4.2",
+        "angular-mocks": "~1.4.2"
+    }
+}
