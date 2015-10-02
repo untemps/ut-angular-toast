@@ -64,5 +64,5 @@ npm install -g gulp
 * `gulp serve-test`: runs tests and keep test browser open for development. Watches for changes in source and test files to re-run the tests
 
 ### License
-MIT
+MIT  
 Thanks to send me an email when using this directive (v.lebadezet@untemps.net).
