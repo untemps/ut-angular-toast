@@ -79,7 +79,7 @@
          * @param text  Message to display.
          * @param delay Display delay.
          */
-        __this.append = function (type, text, delay) {
+        __this.append = function (type, text, delay, stack) {
             var toaster = document.getElementsByClassName('toaster');
             if(toaster.length === 0) {
                 var scope = $rootScope.$new();
@@ -91,6 +91,10 @@
                     '</div>';
                 var linkFn = $compile(template)(scope);
                 angular.element(document.body).append(linkFn);
+            }
+
+            if(!stack) {
+                __this.removeAll();
             }
 
             var toast = new Toast(type, text, delay);

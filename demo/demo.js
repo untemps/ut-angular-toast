@@ -17,9 +17,10 @@
             {label: 'neutral', value: 5}
         ];
         __this.type = __this.types[0];
+        __this.useStack = true;
 
         __this.toast = function() {
-            utToast.append(__this.type.value, __this.text, Math.min(20000, Math.max(1000, __this.delay)));
+            utToast.append(__this.type.value, __this.text, Math.min(20000, Math.max(1000, __this.delay)), __this.useStack);
         };
 
         __this.removeAllToasts = function() {

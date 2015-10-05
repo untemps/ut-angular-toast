@@ -34,14 +34,20 @@
                         </div>
 
                         <div class="form-group">
-                        <label for="typeInput">Choose a type</label>
-                        <select name="typeInput" id="typeInput" ng-model="ctrl.type" ng-options="option.label for option in ctrl.types" class="form-control"></select>
-                    </div>
+                            <label for="typeInput">Choose a type</label>
+                            <select id="typeInput" name="typeInput" ng-model="ctrl.type" ng-options="option.label for option in ctrl.types" class="form-control"></select>
+                        </div>
 
                         <div class="form-group">
                             <label for="textInput">Type a message</label>
                             <textarea name="textInput" id="textInput" ng-model="ctrl.text" rows="6" class="form-control"></textarea>
                             <span class="help-block">You can use HTML in your message</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stackInput">Pile the notifications?</label>
+                            <input id="stackInput" name="stackInput" type="checkbox" ng-model="ctrl.useStack">
+                            <span class="help-block">If true, the new toast will be stacked on the previous ones</span>
                         </div>
 
                         <hr>
