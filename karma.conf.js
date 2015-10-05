@@ -14,8 +14,8 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-mocks/angular-mocks.js',
 
-      'dist/ut-angular-toast.js',
-      'dist/ut-angular-toast.css',
+      'src/ut-angular-toast.js',
+      'src/ut-angular-toast.css',
       'test/**/*.spec.js'
     ],
 
@@ -41,7 +41,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: [process.env.TRAVIS ? 'Firefox' : 'Chrome'],
+    browsers: ['Chrome'],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit

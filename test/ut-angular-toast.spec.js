@@ -1,42 +1,141 @@
 'use strict';
 
-describe('ut-angular-toast', function () {
-  var scope, $compile, $rootScope, element;
+describe('ut-angular-toast append()', function () {
+    var service,
+        toastType = 1,
+        toastContent = 'Test',
+        toastDelay = 500,
+        useStack = true,
+        $rootScope,
+        $timeout;
 
-  function createDirective(template) {
-    var elm;
+    beforeEach(module('ngSanitize', 'untemps.utToast'));
+    beforeEach(inject(function (utToast, _$rootScope_, _$timeout_) {
+        service = utToast;
+        $rootScope = _$rootScope_;
+        $timeout = _$timeout_;
 
-    elm = angular.element(template);
-    angular.element(document.body).prepend(elm);
-    $compile(elm)(scope);
-    scope.$digest();
+        window.jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    }));
 
-    return elm;
-  }
-
-  beforeEach(module('ngSanitize', 'untemps.ut-angular-toast'));
-  beforeEach(inject(function(_$rootScope_, _$compile_) {
-    $rootScope = _$rootScope_;
-    scope = $rootScope.$new();
-    $compile = _$compile_;
-  }));
-
-  afterEach(function () {
-    if (element) element.remove();
-  });
-
-  describe('as an element', function(){ runTestsWithTemplate('<ut-angular-toast></ut-angular-toast>'); });
-  describe('as an attribute', function(){ runTestsWithTemplate('<div ut-angular-toast></div>'); });
-
-  function runTestsWithTemplate(template) {
-    describe('when created', function () {
-
-      it('should initial the value to 0', function () {
-        element = createDirective(template);
-
-        expect(element.text()).toContain('0');
-      });
+    afterEach(function () {
+        service.removeAll();
+        service.toasts = [];
+        var toaster = document.getElementsByClassName('toaster');
+        angular.element(toaster).remove();
     });
-  }
 
+    it('Append method with usStack=true should display all appended elements', function () {
+        service.append(toastType, toastContent, toastDelay, useStack);
+        service.append(toastType, toastContent, toastDelay, useStack);
+        service.append(toastType, toastContent, toastDelay, useStack);
+        $rootScope.$digest();
+
+        var toaster = document.getElementsByClassName('toaster');
+        var element = angular.element(toaster);
+
+        expect(toaster).toBeDefined();
+        expect(element).toBeDefined();
+        expect(service.toasts.length).toEqual(3);
+        expect(element.children().length).toEqual(3);
+    });
+
+    it('Append method with usStack=false should display one element only', function () {
+        service.append(toastType, toastContent, toastDelay, useStack);
+        service.append(toastType, toastContent, toastDelay, false);
+        $rootScope.$digest();
+
+        var toaster = document.getElementsByClassName('toaster');
+        var element = angular.element(toaster);
+
+        expect(service.toasts.length).toEqual(1);
+        expect(element.children().length).toEqual(1);
+    });
+
+    it('Append method should return the appended toast object', function () {
+        var toast = service.append(toastType, toastContent, toastDelay, useStack);
+
+        expect(toast).toBeDefined();
+        expect(toast.type).toEqual(toastType);
+        expect(toast.text).toEqual(toastContent);
+        expect(toast.delay).toEqual(toastDelay);
+    });
+
+    it('Appended toast should be removed after delay expiration', function () {
+        service.append(toastType, toastContent, toastDelay, useStack);
+        $rootScope.$digest();
+
+        var toaster = document.getElementsByClassName('toaster');
+        var element = angular.element(toaster);
+
+        $timeout.flush(toastDelay + 1);
+
+        expect(service.toasts.length).toEqual(0);
+        expect(element.children().length).toEqual(0);
+    });
+});
+
+describe('ut-angular-toast remove()', function () {
+    var service,
+        toastType = 1,
+        toastContent = 'Test',
+        toastDelay = 500,
+        useStack = true,
+        $rootScope;
+
+    beforeEach(module('ngSanitize', 'untemps.utToast'));
+    beforeEach(inject(function (utToast, _$rootScope_) {
+        service = utToast;
+        $rootScope = _$rootScope_;
+    }));
+
+    it('Remove method should remove the specified toast', function () {
+        service.append(toastType, toastContent, toastDelay, useStack);
+        var toast = service.append(toastType, toastContent, toastDelay, useStack);
+
+        var toaster = document.getElementsByClassName('toaster');
+        var element = angular.element(toaster);
+
+        service.remove(toast);
+        $rootScope.$digest();
+
+        expect(service.toasts.length).toEqual(1);
+        expect(element.children().length).toEqual(1);
+
+        service.remove(service.toasts[0]);
+        $rootScope.$digest();
+
+        expect(service.toasts.length).toEqual(0);
+        expect(element.children().length).toEqual(0);
+    });
+});
+
+describe('ut-angular-toast removeAll()', function () {
+    var service,
+        toastType = 1,
+        toastContent = 'Test',
+        toastDelay = 500,
+        useStack = true,
+        $rootScope;
+
+    beforeEach(module('ngSanitize', 'untemps.utToast'));
+    beforeEach(inject(function (utToast, _$rootScope_) {
+        service = utToast;
+        $rootScope = _$rootScope_;
+    }));
+
+    it('RemoveAll method should remove all the current toasts', function () {
+        service.append(toastType, toastContent, toastDelay, useStack);
+        service.append(toastType, toastContent, toastDelay, useStack);
+        service.append(toastType, toastContent, toastDelay, useStack);
+
+        var toaster = document.getElementsByClassName('toaster');
+        var element = angular.element(toaster);
+
+        service.removeAll();
+        $rootScope.$digest();
+
+        expect(service.toasts.length).toEqual(0);
+        expect(element.children().length).toEqual(0);
+    });
 });

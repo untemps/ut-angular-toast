@@ -1,11 +1,11 @@
 (function () {
     'use strict';
 
-    var module = angular.module('untemps.utToast', ['ngAnimate']);
+    var module = angular.module('untemps.utToast', []);
     module.constant('utToastType', ['success', 'error', 'warning', 'info', 'neutral']);
     module.factory('Toast', ['utToastType', Toast]);
     module.controller('utToastController', ['utToast', utToastController]);
-    module.service('utToast', ['$rootScope', '$compile', '$animate', '$timeout', 'Toast', utToast]);
+    module.service('utToast', ['$rootScope', '$compile', '$timeout', 'Toast', utToast]);
 
     /**
      * @ngdoc service
@@ -67,7 +67,7 @@
      * @description Manage the toasts.
      *
      */
-    function utToast($rootScope, $compile, $animate, $timeout, Toast) {
+    function utToast($rootScope, $compile, $timeout, Toast) {
         /*jshint validthis: true */
         var __this = this;
 
