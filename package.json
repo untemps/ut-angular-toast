@@ -1,10 +1,10 @@
 {
-  "name": "angular-directive-boilerplate",
-  "version": "0.0.8",
-  "description": "Angular Publishable Directive Boilerplate",
+  "name": "ut-angular-toast",
+  "version": "1.0",
+  "description": "Angular directive that display a toasted notification at the top right corner of your application.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:mohsen1/angular-directive-boilerplate.git"
+    "url": "https://github.com/untemps/ut-angular-toast.git"
   },
   "main": "dist/ut-angular-toast.js",
   "scripts": {
@@ -13,10 +13,13 @@
   "keywords": [
     "angularjs",
     "angular",
-    "directive"
+    "directive",
+    "toast",
+    "notification",
+    "alert"
   ],
   "author": {
-    "name": "Mohsen Azimi"
+    "name": "Vincent Le Badezet"
   },
   "license": "MIT",
   "devDependencies": {
@@ -44,27 +47,7 @@
     "karma-jasmine": "~0.2.0"
   },
   "bugs": {
-    "url": "https://github.com/mohsen1/angular-directive-boilerplate/issues"
+    "url": "https://github.com/untemps/ut-angular-toast/issues"
   },
-  "homepage": "https://github.com/mohsen1/angular-directive-boilerplate",
-  "_id": "angular-directive-boilerplate@0.0.8",
-  "_shasum": "c1403812398582dfced6552889e07889e5ccec16",
-  "_from": "angular-directive-boilerplate@0.0.*",
-  "_npmVersion": "1.4.9",
-  "_npmUser": {
-    "name": "mohsen",
-    "email": "msnazi@gmail.com"
-  },
-  "maintainers": [
-    {
-      "name": "mohsen",
-      "email": "msnazi@gmail.com"
-    }
-  ],
-  "dist": {
-    "shasum": "c1403812398582dfced6552889e07889e5ccec16",
-    "tarball": "http://registry.npmjs.org/angular-directive-boilerplate/-/angular-directive-boilerplate-0.0.8.tgz"
-  },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/angular-directive-boilerplate/-/angular-directive-boilerplate-0.0.8.tgz"
+  "homepage": "https://github.com/untemps/ut-angular-toast"
 }

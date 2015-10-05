@@ -44,7 +44,7 @@ gulp.task('html', function () {
 
 gulp.task('watch', function () {
   gulp.watch(['./demo/**/*.html'], ['html']);
-  gulp.watch(['./**/*.less'], ['styles']);
+  gulp.watch(['./**/*.css'], ['styles']);
   gulp.watch(['./src/**/*.js','./demo/**/*.js', './**/*.html'], ['scripts']);
 });
 
@@ -87,7 +87,7 @@ gulp.task('scripts', function() {
       timestamp: (new Date()).toISOString(), pkg: config.pkg
     }))
     .pipe(gulp.dest('dist'))
-    .pipe(rename({suffix: '.min.js'}))
+    .pipe(rename({suffix: '.min'}))
     .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest('./dist'))
     .pipe(connect.reload());
@@ -96,14 +96,14 @@ gulp.task('scripts', function() {
 
 gulp.task('styles', function() {
 
-  return gulp.src('src/ut-angular-toast.less')
+  return gulp.src('src/ut-angular-toast.css')
     .pipe(less())
     .pipe(header(config.banner, {
       timestamp: (new Date()).toISOString(), pkg: config.pkg
     }))
     .pipe(gulp.dest('dist'))
     .pipe(minifyCSS())
-    .pipe(rename({suffix: '.min.css'}))
+    .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
 });

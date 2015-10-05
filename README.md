@@ -15,6 +15,13 @@ bower install ut-angular-toast
 
 ### Usage
 
+Add the .js and .css files to your index.html:
+
+```html
+<link rel="stylesheet" href="../dist/ut-angular-toast.min.css">
+<script src="../dist/ut-angular-toast.min.js"></script>
+```
+
 Add it as a dependency to your app:
 
 ```javascript

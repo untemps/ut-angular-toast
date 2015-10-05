@@ -1,7 +1,7 @@
 /*!
- * angular-directive-boilerplate
- * https://github.com/mohsen1/angular-directive-boilerplate
- * Version: 0.0.8 - 2015-10-01T14:47:00.783Z
+ * ut-angular-toast
+ * https://github.com/untemps/ut-angular-toast
+ * Version: 1.0 - 2015-10-05T15:59:36.721Z
  * License: MIT
  */
 
@@ -10,97 +10,136 @@
     'use strict';
 
     var module = angular.module('untemps.utToast', []);
-    module.constant('utToastConstant', {delay: 5000});
-    module.factory('utToastFactory', [utToastFactory]);
-    module.directive('utToast', ['utToastFactory', utToast]);
-    module.directive('utToastMessage', ['$animate', '$timeout', 'utToastFactory', 'utToastConstant', utToastMessage]);
+    module.constant('utToastType', ['success', 'error', 'warning', 'info', 'neutral']);
+    module.factory('Toast', ['utToastType', Toast]);
+    module.controller('utToastController', ['utToast', utToastController]);
+    module.service('utToast', ['$rootScope', '$window', '$compile', '$timeout', 'Toast', utToast]);
 
     /**
      * @ngdoc service
-     * @name utToastFactory
-     * @description // TODO: To complete
+     * @name Toast
+     * @description Toast object.
      *
      */
-    function utToastFactory () {
+    function Toast(utToastType) {
+        return function (type, text, delay) {
+            var __this = this;
+
+            var resolveType = function (type) {
+                var result = 5;
+                if (angular.isNumber(type)) {
+                    result = Math.max(0, Math.min(utToastType.length, Math.floor(type)));
+                } else if (angular.isString(type)) {
+                    var index = utToastType.indexOf(type);
+                    if (index > -1) {
+                        result = index + 1;
+                    }
+                }
+                return result;
+            };
+
+            __this.uid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                /*jslint bitwise: true */
+                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16).toLocaleUpperCase();
+            });
+            __this.type = resolveType(type);
+            __this.text = text;
+            __this.delay = delay || 5000;
+        };
+    }
+
+    /**
+     * @ngdoc controller
+     * @name utToastController
+     * @description Controller for the toast container.
+     *
+     */
+    function utToastController(utToast) {
         /*jshint validthis: true */
         var __this = this;
 
-        __this.messages = [];
+        __this.toasts = utToast.toasts;
 
-        __this.add = function(message, level) {
-            var lines = message;
-            if(typeof message == 'string') {
-                lines = [message];
-            }
-            __this.messages.push({lines: lines, level: level});
-        };
-
-        __this.remove = function(index) {
-            __this.messages.splice(index, 1);
-        };
-
-        __this.removeAll = function() {
-            __this.messages = [];
-        };
-
-        return __this;
-    }
-
-    /**
-     * @ngdoc directive
-     * @name utToast
-     * @description // TODO: To complete
-     *
-     */
-    function utToast(utToastFactory) {
-
-        return {
-            template: '<ul>' +
-            '<li ng-repeat="message in messages" ng-class="{info: message.level==0, error: message.level==1, warn: message.level==2, success: message.level==3}">' +
-            '<toast-message index="$index" lines="message.lines" level="message.level">' +
-            '</li>' +
-            '</ul>',
-            restrict: 'AEC',
-            compile: function(element, attrs) {
-                return function(scope) {
-                    scope.messages = utToastFactory.messages;
-                };
-            }
+        /**
+         * Remove toast by index.
+         * @param index Index of the toast to remove.
+         */
+        __this.remove = function (index) {
+            utToast.remove(index);
         };
     }
 
     /**
-     * @ngdoc directive
+     * @ngdoc service
      * @name utToast
-     * @description // TODO: To complete
+     * @description Manage the toasts.
      *
      */
-    function utToastMessage ($animate, $timeout, utToastFactory, utToastConstant) {
-        return {
-            template: '<div>' +
-            '<div class="toast-line-container">' +
-            '<span class="toast-line" ng-repeat="line in lines">{{line}}</span>' +
-            '</div>' +
-            '<span class="toast-close glyphicon glyphicon-remove" aria-hidden="true" ng-click="remove()"></span>' +
-            '</div>',
-            restrict: 'EA',
-            replace: true,
-            scope: {
-                index: '=',
-                lines: '=',
-                level: '='
-            },
-            controller: function($scope) {
-                $scope.remove = function() {
-                    utToastFactory.remove($scope.index);
-                    $scope.$apply();
-                };
-            },
-            link: function(scope, element, attrs){
-                $timeout(function () {
-                    scope.remove();
-                }, utToastConstant.delay);
+    function utToast($rootScope, $window, $compile, $timeout, Toast) {
+        /*jshint validthis: true */
+        var __this = this;
+
+        __this.toasts = [];
+
+        /**
+         * Append a toast.
+         * @param type  Toast type ('success'|'error'|'info'|'warning'|'neutral').
+         * @param text  Message to display.
+         * @param delay Display delay.
+         */
+        __this.append = function (type, text, delay, stack) {
+            var toaster = $window.document.getElementsByClassName('toaster');
+            if(toaster.length === 0) {
+                var scope = $rootScope.$new();
+                var template = '<div class="toaster" ng-controller="utToastController as ctrl">' +
+                    '<div ng-repeat="toast in ctrl.toasts" ng-class="{success: toast.type===1, error: toast.type===2, warning: toast.type===3, info: toast.type===4, neutral: toast.type===5}">' +
+                    '<span class="close" ng-click="ctrl.remove(toast)"></span>' +
+                    '<span class="text" ng-bind-html="toast.text"></span>' +
+                    '</div>' +
+                    '</div>';
+                var linkFn = $compile(template)(scope);
+                angular.element($window.document.body).append(linkFn);
             }
+
+            if(!stack) {
+                __this.removeAll();
+            }
+
+            var toast = new Toast(type, text, delay);
+            toast.timeout = $timeout(function () {
+                __this.remove(toast);
+            }, toast.delay);
+            __this.toasts.push(toast);
+
+            return toast;
         };
+
+        /**
+         * Remove toast.
+         * @param toast Toast to remove.
+         */
+        __this.remove = function (toast) {
+            $timeout.cancel(toast.timeout);
+            toast.timeout = undefined;
+            __this.toasts.splice(__this.toasts.indexOf(toast), 1);
+
+            return __this.toasts.indexOf(toast) === -1;
+        };
+
+        /**
+         * Remove all current toasts.
+         */
+        __this.removeAll = function () {
+            while (__this.toasts.length > 0) {
+                __this.remove(__this.toasts[0]);
+            }
+
+            return __this.toasts.length === 0;
+        };
+
+        $rootScope.$on('destroy', function() {
+           __this.removeAll();
+        });
     }
 })();

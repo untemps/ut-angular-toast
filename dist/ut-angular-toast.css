@@ -1,110 +1,58 @@
-ut-toast,
-.ut-toast {
+/*!
+ * ut-angular-toast
+ * https://github.com/untemps/ut-angular-toast
+ * Version: 1.0 - 2015-10-05T15:59:36.729Z
+ * License: MIT
+ */
+
+
+.toaster {
   position: fixed;
   z-index: 1080;
-
-  left: 30px;
+  max-height: calc(80%);
+  overflow: auto;
+  width: 30%;
   top: 10px;
-  right: 30px;
+  right: 10px;
 }
-
-ut-toast ul,
-.ut-toast ul {
-  list-style: none;
-  padding: 0;
-
-  width: 100%;
+.toaster div {
+  margin-bottom: 10px;
+  padding: 20px;
+  opacity: 0.8;
 }
-
-ut-toast ul li,
-.ut-toast ul li {
+.toaster div:last-child {
+  margin-bottom: 0px;
+}
+.toaster div.neutral {
   color: #000000;
   background-color: #ffffff;
-
-  width: 100%;
-  min-width: 500px;
-
-  margin-bottom: 10px;
+  border: solid 1px #dedede;
 }
-
-ut-toast ul li.error,
-.ut-toast ul li.error {
+.toaster div.error {
   color: #ffffff;
   background-color: #880000;
 }
-
-ut-toast ul li.warn,
-.ut-toast ul li.warn {
+.toaster div.warning {
   color: #ffffff;
   background-color: #c67605;
 }
-
-ut-toast ul li.info,
-.ut-toast ul li.info {
+.toaster div.info {
   color: #ffffff;
   background-color: #105cb6;
 }
-
-ut-toast ul li.success,
-.ut-toast ul li.success {
+.toaster div.success {
   color: #ffffff;
   background-color: #449d44;
 }
-
-ut-toast ul li.ng-move,
-.ut-toast ul li.ng-move {
-  opacity: 0;
-  -webkit-transition: 1s linear all; /* Safari/Chrome */
-  transition: 1s linear all; /* All other modern browsers and IE10+ */
+.toaster div span.close {
+  position: relative;
+  top: -10px;
+  right: -15px;
+  width: 16px;
+  height: 16px;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3woCDgsCyGFBnQAAAKhJREFUKM99krEOwjAMRK+wtTNS1T3fkCGfyNYPYuYXWCKmIjb+4LHYlVNQLEWOdCf77hIBkiTgbF1eARsaDBiBFSgOBPICXIFpn2xkgDeQw4YZeBi2ugoBxcgALyABF+AeBpWjzmxkgCdws/vmW6MH78nIXhVIkXNSWx9JVb0K0+egudpxTz+SlpDGZtJS8NSYHiznf7HmkF4T69R5uGLYePTQ+xo79gVFD0qIE78rAAAAAABJRU5ErkJggg==');
+  background-repeat: no-repeat;
 }
-
-ut-toast ul li.ng-move-active,
-.ut-toast ul li.ng-move-active {
-  opacity: 1;
-}
-
-ut-toast ul li.ng-leave,
-.ut-toast ul li.ng-leave {
-  opacity: 1;
-  -webkit-transition: 1s linear all; /* Safari/Chrome */
-  transition: 1s linear all; /* All other modern browsers and IE10+ */
-}
-
-ut-toast ul li.ng-leave-active,
-.ut-toast ul li.ng-leave-active {
-  opacity: 0;
-}
-
-ut-toast ul li *,
-.ut-toast ul li * {
-  display: inline-block;
-}
-
-ut-toast ul li div,
-.ut-toast ul li div {
-  text-align: right;
-  width: 100%;
-}
-
-ut-toast ul li div.toast-line-container,
-.ut-toast ul li div.toast-line-container {
-  width: 98%;
-
-  margin: 0;
-  padding: 15px 15px;
-}
-
-ut-toast ul li span.toast-line,
-.ut-toast ul li span.toast-line {
-  display: block;
-
-  text-align: left;
-}
-
-ut-toast ul li span.toast-close,
-.ut-toast ul li span.toast-close {
-  cursor: pointer;
-
-  vertical-align: top;
-  margin: 5px;
+.toaster div.neutral span.close {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3woCDhcWNMzIvQAAAJpJREFUKM+NkjsOgzAQRB9JB3UkRO8zuPAR0/lAqbkCDaIKSscNTDMhi2MQI61k7Yz3Mzb8cOcYVZ6ogQiEgrgDnkBjK0cgAR/AG3ELDOKinSJInIAZcMAD6E2hv+5e4gRMwEvnd9Z1BydxUozKbbhlFxaJLqE1M4+K706+ZN1gZnaKubR0JZ9Ltnrj3s7W5uThgrg6J86+xsat4ygrmXhnuuQAAAAASUVORK5CYII=');
 }

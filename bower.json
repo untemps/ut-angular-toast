@@ -1,8 +1,8 @@
 {
     "name": "ut-angular-toast",
-    "version": "0.0.1",
+    "version": "1.0",
     "authors": "v.lebadezet@untemps.net",
-    "description": "Display a notification on top of the application.",
+    "description": "Angular directive that display a toasted notification at the top right corner of your application.",
     "main": "dist/ut-angular-toast.js",
     "license": "MIT",
     "private": false,

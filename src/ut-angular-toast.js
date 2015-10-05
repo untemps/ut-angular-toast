@@ -5,7 +5,7 @@
     module.constant('utToastType', ['success', 'error', 'warning', 'info', 'neutral']);
     module.factory('Toast', ['utToastType', Toast]);
     module.controller('utToastController', ['utToast', utToastController]);
-    module.service('utToast', ['$rootScope', '$compile', '$timeout', 'Toast', utToast]);
+    module.service('utToast', ['$rootScope', '$window', '$compile', '$timeout', 'Toast', utToast]);
 
     /**
      * @ngdoc service
@@ -31,6 +31,7 @@
             };
 
             __this.uid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                /*jslint bitwise: true */
                 var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16).toLocaleUpperCase();
             });
@@ -67,7 +68,7 @@
      * @description Manage the toasts.
      *
      */
-    function utToast($rootScope, $compile, $timeout, Toast) {
+    function utToast($rootScope, $window, $compile, $timeout, Toast) {
         /*jshint validthis: true */
         var __this = this;
 
@@ -80,7 +81,7 @@
          * @param delay Display delay.
          */
         __this.append = function (type, text, delay, stack) {
-            var toaster = document.getElementsByClassName('toaster');
+            var toaster = $window.document.getElementsByClassName('toaster');
             if(toaster.length === 0) {
                 var scope = $rootScope.$new();
                 var template = '<div class="toaster" ng-controller="utToastController as ctrl">' +
@@ -90,7 +91,7 @@
                     '</div>' +
                     '</div>';
                 var linkFn = $compile(template)(scope);
-                angular.element(document.body).append(linkFn);
+                angular.element($window.document.body).append(linkFn);
             }
 
             if(!stack) {
