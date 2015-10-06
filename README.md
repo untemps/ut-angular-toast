@@ -18,8 +18,8 @@ bower install ut-angular-toast
 Add the .js and .css files to your index.html:
 
 ```html
-<link rel="stylesheet" href="../dist/ut-angular-toast.min.css">
-<script src="../dist/ut-angular-toast.min.js"></script>
+<link rel="stylesheet" href="bower_components/dist/ut-angular-toast.min.css">
+<script src="bower_components/dist/ut-angular-toast.min.js"></script>
 ```
 
 Add it as a dependency to your app:
@@ -33,6 +33,10 @@ Append a toast everywhere in your code by injecting the utToast service:
 ```javascript
 utToast.append('success', 'My message', 5000);
 ```
+
+### Demo
+
+[http://plnkr.co/tskEcCT462EZjIn2xcux](http://plnkr.co/tskEcCT462EZjIn2xcux)
 
 ### 'utToast' API
 

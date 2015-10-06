@@ -12,7 +12,12 @@
 .toaster div {
     margin-bottom: 10px;
     padding: 20px;
+    -webkit-opacity: 0.8;
+    -moz-opacity: 0.8;
     opacity: 0.8;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .toaster div:last-child {

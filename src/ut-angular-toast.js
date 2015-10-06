@@ -14,7 +14,7 @@
      *
      */
     function Toast(utToastType) {
-        return function (type, text, delay) {
+        return function (type, text, delay, showClose) {
             var __this = this;
 
             var resolveType = function (type) {
@@ -37,7 +37,8 @@
             });
             __this.type = resolveType(type);
             __this.text = text;
-            __this.delay = delay || 5000;
+            __this.delay = delay || 0;
+            __this.showClose = showClose || false;
         };
     }
 
@@ -80,13 +81,13 @@
          * @param text  Message to display.
          * @param delay Display delay.
          */
-        __this.append = function (type, text, delay, stack) {
+        __this.append = function (type, text, delay, close, stack) {
             var toaster = $window.document.getElementsByClassName('toaster');
             if(toaster.length === 0) {
                 var scope = $rootScope.$new();
                 var template = '<div class="toaster" ng-controller="utToastController as ctrl">' +
                     '<div ng-repeat="toast in ctrl.toasts" ng-class="{success: toast.type===1, error: toast.type===2, warning: toast.type===3, info: toast.type===4, neutral: toast.type===5}">' +
-                    '<span class="close" ng-click="ctrl.remove(toast)"></span>' +
+                    '<span class="close" ng-click="ctrl.remove(toast)" ng-if="toast.showClose"></span>' +
                     '<span class="text" ng-bind-html="toast.text"></span>' +
                     '</div>' +
                     '</div>';
@@ -98,10 +99,12 @@
                 __this.removeAll();
             }
 
-            var toast = new Toast(type, text, delay);
-            toast.timeout = $timeout(function () {
-                __this.remove(toast);
-            }, toast.delay);
+            var toast = new Toast(type, text, delay, close);
+            if(toast.delay > 0) {
+                toast.timeout = $timeout(function () {
+                    __this.remove(toast);
+                }, toast.delay);
+            }
             __this.toasts.push(toast);
 
             return toast;
