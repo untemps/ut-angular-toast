@@ -40,12 +40,13 @@ utToast.append('success', 'My message', 5000);
 
 ### 'utToast' API
 
-* `append(toastType, toastMessage, toastDelay, useStack)`:  
+* `append(toastType, toastMessage, toastDelay, showCloseButton, useStack)`:  
 Append a toast by specifying the type, the message and the delay.  
 Return the toast object just appended.
     * `toastType`: Type of the toast ('success', 1, 'error', 2, 'warning', 3, 'info', 4, 'neutral', 5) (default: 1). Use the utToastType constant to be sure to pass a valid value.
     * `toastMessage`: Message of the toast. You can use HTML in the message.
     * `toastDelay`: Delay of the toast in milliseconds (default: 5000).
+    * `showCloseButton`: True if the toast has to display a close button.
     * `useStack`: True if the new toast has to be stacked on the current ones. False if the toast has to replace the current ones.
 
 

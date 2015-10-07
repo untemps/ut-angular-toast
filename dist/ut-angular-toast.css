@@ -1,7 +1,7 @@
 /*!
  * ut-angular-toast
  * https://github.com/untemps/ut-angular-toast
- * Version: 1.0 - 2015-10-05T15:59:36.729Z
+ * Version: 1.0 - 2015-10-06T16:17:02.451Z
  * License: MIT
  */
 
@@ -19,6 +19,9 @@
   margin-bottom: 10px;
   padding: 20px;
   opacity: 0.8;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 .toaster div:last-child {
   margin-bottom: 0px;
