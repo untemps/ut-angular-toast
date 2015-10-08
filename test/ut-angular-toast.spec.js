@@ -117,7 +117,7 @@ describe('ut-angular-toast remove()', function () {
         $rootScope = _$rootScope_;
     }));
 
-    it('Remove method should remove the specified toast', function () {
+    it('remove method should remove the specified toast', function () {
         service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
         var toast = service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
 
@@ -154,7 +154,7 @@ describe('ut-angular-toast removeAll()', function () {
         $rootScope = _$rootScope_;
     }));
 
-    it('RemoveAll method should remove all the current toasts', function () {
+    it('removeAll method should remove all the current toasts', function () {
         service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
         service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
         service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
@@ -167,5 +167,35 @@ describe('ut-angular-toast removeAll()', function () {
 
         expect(service.toasts.length).toEqual(0);
         expect(element.children().length).toEqual(0);
+    });
+});
+
+describe('ut-angular-toast clear()', function () {
+    var service,
+        toastType = 1,
+        toastContent = 'Test',
+        toastDelay = 500,
+        showCloseButton = true,
+        animationClass = null,
+        useStack = true,
+        $rootScope;
+
+    beforeEach(module('ngSanitize', 'untemps.utToast'));
+    beforeEach(inject(function (utToast, _$rootScope_) {
+        service = utToast;
+        $rootScope = _$rootScope_;
+    }));
+
+    it('clear method should drop the toast container', function () {
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+
+        var toaster = document.getElementsByClassName('toaster');
+
+        service.clear();
+        $rootScope.$digest();
+
+        expect(toaster.length).toEqual(0);
     });
 });

@@ -32,5 +32,9 @@
         __this.removeAllToasts = function() {
             utToast.removeAll();
         };
+
+        __this.clear = function() {
+            utToast.clear();
+        };
     }
 })();

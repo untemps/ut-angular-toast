@@ -93,6 +93,7 @@
             };
             __this.remove = service.remove;
             __this.removeAll = service.removeAll;
+            __this.clear = service.clear;
 
             return this;
         }];
@@ -120,8 +121,8 @@
          * @param stackToast        True if the new toast has to be stacked on the current ones. False if the toast has to replace the current ones.
          */
         __this.append = function (toastType, toastMessage, toastDelay, showCloseButton, animationClass, stackToast) {
-            var toaster = $window.document.getElementsByClassName('toaster');
-            if(toaster.length === 0) {
+            var toasterElements = $window.document.getElementsByClassName('toaster');
+            if(toasterElements.length === 0) {
                 var scope = $rootScope.$new();
                 var template = '<div class="toaster" ng-controller="utToastController as ctrl">' +
                     '<div ng-repeat="toast in ctrl.toasts" ng-class="[toast.animationClass,' +
@@ -172,8 +173,21 @@
             return __this.toasts.length === 0;
         };
 
+        /**
+         * Clear the HTML by dropping the toast container.
+         */
+        __this.clear = function() {
+            __this.removeAll();
+            var toasterElements = $window.document.getElementsByClassName('toaster');
+            if(toasterElements.length > 0) {
+                angular.element(toasterElements).remove();
+            }
+
+            return toasterElements.length === 0;
+        };
+
         $rootScope.$on('destroy', function() {
-           __this.removeAll();
+            __this.clear();
         });
     }
 })();
