@@ -2,11 +2,14 @@
     position: fixed;
     z-index: 1080;
     max-height: calc(100% - 20px);
-    overflow: auto;
+    overflow: hidden;
 
     width: 30%;
     top: 10px;
     right: 10px;
+
+    font-family: Arial;
+    font-size: 12px;
 }
 
 .toaster div {
@@ -62,4 +65,27 @@
 
 .toaster div.neutral span.close {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3woCDhcWNMzIvQAAAJpJREFUKM+NkjsOgzAQRB9JB3UkRO8zuPAR0/lAqbkCDaIKSscNTDMhi2MQI61k7Yz3Mzb8cOcYVZ6ogQiEgrgDnkBjK0cgAR/AG3ELDOKinSJInIAZcMAD6E2hv+5e4gRMwEvnd9Z1BydxUozKbbhlFxaJLqE1M4+K706+ZN1gZnaKubR0JZ9Ltnrj3s7W5uThgrg6J86+xsat4ygrmXhnuuQAAAAASUVORK5CYII=');
+}
+
+/* Animation */
+
+.toaster div.fade.ng-enter,
+.toaster div.fade.ng-leave,
+.toaster div.fade.ng-move {
+    transition:0.5s linear all;
+}
+
+.toaster div.fade.ng-enter {
+    opacity:0;
+}
+
+.toaster div.fade.ng-enter.ng-enter-active {
+    opacity:0.8;
+}
+
+.toaster div.fade.ng-leave {
+    opacity:0.8;
+}
+.toaster div.fade.ng-leave.ng-leave-active {
+    opacity:0;
 }

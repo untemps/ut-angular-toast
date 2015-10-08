@@ -6,6 +6,7 @@ describe('ut-angular-toast append()', function () {
         toastContent = 'Test',
         toastDelay = 500,
         showCloseButton = true,
+        animationClass = null,
         useStack = true,
         $rootScope,
         $timeout;
@@ -27,9 +28,9 @@ describe('ut-angular-toast append()', function () {
     });
 
     it('Append method with usStack=true should display all appended elements', function () {
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
         $rootScope.$digest();
 
         var toaster = document.getElementsByClassName('toaster');
@@ -42,8 +43,8 @@ describe('ut-angular-toast append()', function () {
     });
 
     it('Append method with usStack=false should display one element only', function () {
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
-        service.append(toastType, toastContent, toastDelay, showCloseButton, false);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, false);
         $rootScope.$digest();
 
         var toaster = document.getElementsByClassName('toaster');
@@ -54,16 +55,16 @@ describe('ut-angular-toast append()', function () {
     });
 
     it('Append method should return the appended toast object', function () {
-        var toast = service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
+        var toast = service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
 
         expect(toast).toBeDefined();
         expect(toast.type).toEqual(toastType);
-        expect(toast.text).toEqual(toastContent);
+        expect(toast.message).toEqual(toastContent);
         expect(toast.delay).toEqual(toastDelay);
     });
 
     it('Appended toast should display a close button', function () {
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
         $rootScope.$digest();
 
         var closeButton = document.getElementsByClassName('close');
@@ -71,7 +72,7 @@ describe('ut-angular-toast append()', function () {
     });
 
     it('Appended toast should not display a close button', function () {
-        service.append(toastType, toastContent, toastDelay, false, useStack);
+        service.append(toastType, toastContent, toastDelay, false, animationClass, useStack);
         $rootScope.$digest();
 
         var closeButton = document.getElementsByClassName('close');
@@ -79,7 +80,7 @@ describe('ut-angular-toast append()', function () {
     });
 
     it('Appended toast should be removed after delay expiration', function () {
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
         $rootScope.$digest();
 
         var toaster = document.getElementsByClassName('toaster');
@@ -90,6 +91,14 @@ describe('ut-angular-toast append()', function () {
         expect(service.toasts.length).toEqual(0);
         expect(element.children().length).toEqual(0);
     });
+
+    it('Appended toast should have the specified animation class', function () {
+        service.append(toastType, toastContent, toastDelay, showCloseButton, 'fade', useStack);
+        $rootScope.$digest();
+
+        var closeButton = document.getElementsByClassName('fade');
+        expect(closeButton.length).toEqual(1);
+    });
 });
 
 describe('ut-angular-toast remove()', function () {
@@ -98,6 +107,7 @@ describe('ut-angular-toast remove()', function () {
         toastContent = 'Test',
         toastDelay = 500,
         showCloseButton = true,
+        animationClass = null,
         useStack = true,
         $rootScope;
 
@@ -108,8 +118,8 @@ describe('ut-angular-toast remove()', function () {
     }));
 
     it('Remove method should remove the specified toast', function () {
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
-        var toast = service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        var toast = service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
 
         var toaster = document.getElementsByClassName('toaster');
         var element = angular.element(toaster);
@@ -134,6 +144,7 @@ describe('ut-angular-toast removeAll()', function () {
         toastContent = 'Test',
         toastDelay = 500,
         showCloseButton = true,
+        animationClass = null,
         useStack = true,
         $rootScope;
 
@@ -144,9 +155,9 @@ describe('ut-angular-toast removeAll()', function () {
     }));
 
     it('RemoveAll method should remove all the current toasts', function () {
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
-        service.append(toastType, toastContent, toastDelay, showCloseButton, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
+        service.append(toastType, toastContent, toastDelay, showCloseButton, animationClass, useStack);
 
         var toaster = document.getElementsByClassName('toaster');
         var element = angular.element(toaster);

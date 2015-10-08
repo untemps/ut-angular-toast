@@ -3,11 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>AngularJS directive demo</title>
-
-        <!-- TODO: Include Angular from Bower components -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
 
         <link rel="stylesheet" href="../src/ut-angular-toast.css">
@@ -21,7 +16,7 @@
                 <h4>Simple usage</h4>
 
                 <p>This is a simple usage of untemps.ut-angular-toast</p>
-                <pre>utToast.append('success', 'My message', 5000, true, true);</pre>
+                <pre>utToast.append('success', 'My message', 5000, true, 'slide', true);</pre>
                 <h4>Results</h4>
 
                 <div ng-controller="demoController as ctrl">
@@ -65,6 +60,9 @@
                 </div>
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
 
         <script src="../src/ut-angular-toast.js"></script>
         <script src="demo.js"></script>

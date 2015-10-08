@@ -1,5 +1,36 @@
 .usage {
-  padding: 10px;
-  border: 1px solid rgba(0,0,0,0.09);
-  border-radius: 5px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 5px;
+}
+
+.slide.ng-enter,
+.slide.ng-leave,
+.slide.ng-move {
+    position: relative;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+}
+
+.slide.ng-enter {
+    opacity: 0;
+    right: -200%;
+    margin-right: 20px;
+}
+
+.slide.ng-enter.ng-enter-active {
+    opacity: 0.8;
+    right: 0;
+    margin-right: 0;
+}
+
+.slide.ng-leave {
+    opacity: 0.8;
+    right: 0;
+    margin-right: 0;
+}
+
+.slide.ng-leave.ng-leave-active {
+    right: -200%;
+    margin-right: 20px;
 }

@@ -47,6 +47,7 @@ Return the toast object just appended.
     * `toastMessage`: Message of the toast. You can use HTML in the message.
     * `toastDelay`: Delay of the toast in milliseconds (default: 5000).
     * `showCloseButton`: True if the toast has to display a close button.
+    * `animationClass`: CSS class to be used as animation. You need to inject the ngAnimate module tu use this feature.
     * `useStack`: True if the new toast has to be stacked on the current ones. False if the toast has to replace the current ones.
 
 

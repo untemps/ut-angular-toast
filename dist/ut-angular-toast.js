@@ -1,7 +1,7 @@
 /*!
  * ut-angular-toast
  * https://github.com/untemps/ut-angular-toast
- * Version: 1.0 - 2015-10-06T16:17:02.443Z
+ * Version: 1.0 - 2015-10-08T10:18:22.191Z
  * License: MIT
  */
 
@@ -13,7 +13,8 @@
     module.constant('utToastType', ['success', 'error', 'warning', 'info', 'neutral']);
     module.factory('Toast', ['utToastType', Toast]);
     module.controller('utToastController', ['utToast', utToastController]);
-    module.service('utToast', ['$rootScope', '$window', '$compile', '$timeout', 'Toast', utToast]);
+    module.provider('utToast', [utToast]);
+    module.service('utToastService', ['$rootScope', '$window', '$compile', '$timeout', 'Toast', utToastService]);
 
     /**
      * @ngdoc service
@@ -22,7 +23,7 @@
      *
      */
     function Toast(utToastType) {
-        return function (type, text, delay, showClose) {
+        return function (type, message, delay, showCloseButton, animationClass) {
             var __this = this;
 
             var resolveType = function (type) {
@@ -44,9 +45,10 @@
                 return v.toString(16).toLocaleUpperCase();
             });
             __this.type = resolveType(type);
-            __this.text = text;
+            __this.message = message;
             __this.delay = delay || 0;
-            __this.showClose = showClose || false;
+            __this.showCloseButton = showCloseButton || false;
+            __this.animationClass = animationClass;
         };
     }
 
@@ -63,12 +65,45 @@
         __this.toasts = utToast.toasts;
 
         /**
-         * Remove toast by index.
-         * @param index Index of the toast to remove.
+         * Remove toast.
+         * @param toast Toast to remove.
          */
-        __this.remove = function (index) {
-            utToast.remove(index);
+        __this.remove = function (toast) {
+            utToast.remove(toast);
         };
+    }
+
+    function utToast() {
+        /*jshint validthis: true */
+        var __this = this;
+
+        __this.config = {};
+        __this.config.toastDelay = 5000;
+        __this.config.showCloseButton = true;
+        __this.config.animationClass = 'fade';
+        __this.config.stackToast = true;
+
+        __this.setConfig = function(config) {
+            __this.config = angular.extend(__this.config, config);
+        };
+
+        __this.$get = ['utToastService',function(utToastService){
+            var service = utToastService;
+
+            __this.toasts = service.toasts;
+            __this.append = function(toastType, toastMessage, toastDelay, showCloseButton, animationClass, stackToast) {
+                toastDelay = toastDelay || __this.config.toastDelay;
+                showCloseButton = angular.isDefined(showCloseButton) ? showCloseButton : __this.config.showCloseButton;
+                animationClass = animationClass || __this.config.animationClass;
+                stackToast = angular.isDefined(stackToast) ? stackToast : __this.config.stackToast;
+
+                return service.append(toastType, toastMessage, toastDelay, showCloseButton, animationClass, stackToast);
+            };
+            __this.remove = service.remove;
+            __this.removeAll = service.removeAll;
+
+            return this;
+        }];
     }
 
     /**
@@ -77,7 +112,7 @@
      * @description Manage the toasts.
      *
      */
-    function utToast($rootScope, $window, $compile, $timeout, Toast) {
+    function utToastService($rootScope, $window, $compile, $timeout, Toast) {
         /*jshint validthis: true */
         var __this = this;
 
@@ -85,35 +120,39 @@
 
         /**
          * Append a toast.
-         * @param type  Toast type ('success'|'error'|'info'|'warning'|'neutral').
-         * @param text  Message to display.
-         * @param delay Display delay.
+         * @param toastType         Type of the toast ('success', 1, 'error', 2, 'warning', 3, 'info', 4, 'neutral', 5) (default: 1). Use the utToastType constant to be sure to pass a valid value.
+         * @param toastMessage      Message of the toast. You can use HTML in the message.
+         * @param toastDelay        Delay of the toast in milliseconds (default: 5000).
+         * @param showCloseButton   True if the toast has to display a close button.
+         * @param animationClass    CSS class to be used as animation. You need to inject the ngAnimate module tu use this feature.
+         * @param stackToast        True if the new toast has to be stacked on the current ones. False if the toast has to replace the current ones.
          */
-        __this.append = function (type, text, delay, close, stack) {
+        __this.append = function (toastType, toastMessage, toastDelay, showCloseButton, animationClass, stackToast) {
             var toaster = $window.document.getElementsByClassName('toaster');
             if(toaster.length === 0) {
                 var scope = $rootScope.$new();
                 var template = '<div class="toaster" ng-controller="utToastController as ctrl">' +
-                    '<div ng-repeat="toast in ctrl.toasts" ng-class="{success: toast.type===1, error: toast.type===2, warning: toast.type===3, info: toast.type===4, neutral: toast.type===5}">' +
-                    '<span class="close" ng-click="ctrl.remove(toast)" ng-if="toast.showClose"></span>' +
-                    '<span class="text" ng-bind-html="toast.text"></span>' +
+                    '<div ng-repeat="toast in ctrl.toasts" ng-class="[toast.animationClass,' +
+                    '{success: toast.type===1, error: toast.type===2, warning: toast.type===3, info: toast.type===4, neutral: toast.type===5}]">' +
+                    '<span class="close" ng-click="ctrl.remove(toast)" ng-if="toast.showCloseButton"></span>' +
+                    '<span class="text" ng-bind-html="toast.message"></span>' +
                     '</div>' +
                     '</div>';
                 var linkFn = $compile(template)(scope);
                 angular.element($window.document.body).append(linkFn);
             }
 
-            if(!stack) {
+            if(!stackToast) {
                 __this.removeAll();
             }
 
-            var toast = new Toast(type, text, delay, close);
+            var toast = new Toast(toastType, toastMessage, toastDelay, showCloseButton, animationClass);
             if(toast.delay > 0) {
                 toast.timeout = $timeout(function () {
                     __this.remove(toast);
                 }, toast.delay);
             }
-            __this.toasts.push(toast);
+            __this.toasts.unshift(toast);
 
             return toast;
         };

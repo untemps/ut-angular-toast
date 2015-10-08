@@ -1,8 +1,13 @@
 (function () {
     'use strict';
 
-    var module = angular.module('demo', ['ngSanitize', 'untemps.utToast']);
+    var module = angular.module('demo', ['ngSanitize', 'ngAnimate', 'untemps.utToast']);
+    module.config(['utToastProvider', config]);
     module.controller('demoController', ['utToast', demoController]);
+
+    function config(utToastProvider) {
+        utToastProvider.setConfig({animationClass: 'slide'});
+    }
 
     function demoController(utToast) {
         var __this = this;
@@ -21,7 +26,7 @@
         __this.stack = true;
 
         __this.toast = function() {
-            utToast.append(__this.type.value, __this.text, Math.min(20000, Math.max(0, __this.delay)), __this.showClose, __this.stack);
+            utToast.append(__this.type.value, __this.text, Math.min(20000, Math.max(0, __this.delay)), __this.showClose, null, __this.stack);
         };
 
         __this.removeAllToasts = function() {
